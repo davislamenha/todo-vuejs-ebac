@@ -76,6 +76,7 @@ const pegarTarefasFiltradas = () => {
     <ul class="list-group mt-4">
       <li v-for="tarefa in pegarTarefasFiltradas()" class="list-group-item">
         <input
+          @change="({ target }) => (tarefa.concluida = target.checked)"
           type="checkbox"
           :checked="tarefa.concluida"
           :id="tarefa.titulo"
