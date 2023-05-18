@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 
 const estado = reactive({
+  filtro: 'todas',
   tarefas: [
     {
       titulo: 'Estudar ES6',
@@ -20,6 +21,25 @@ const estado = reactive({
 
 const pegarTarefasPendentes = () => {
   return estado.tarefas.filter(({ concluida }) => !concluida);
+};
+
+const pegarTarefasFinalizadas = () => {
+  return estado.tarefas.filter(({ concluida }) => concluida);
+};
+
+const pegarTarefasFiltradas = () => {
+  const { filtro } = estado;
+
+  switch (filtro) {
+    case 'pendentes':
+      return pegarTarefasPendentes();
+
+    case 'finalizadas':
+      return pegarTarefasFinalizadas();
+
+    default:
+      return estado.tarefas;
+  }
 };
 </script>
 
@@ -42,7 +62,10 @@ const pegarTarefasPendentes = () => {
           <button type="submit" class="btn btn-primary">Cadastrar</button>
         </div>
         <div class="col-md-2">
-          <select class="form-control">
+          <select
+            @change="({ target }) => (estado.filtro = target.value)"
+            class="form-control"
+          >
             <option value="todas">Todas as tarefas</option>
             <option value="pendentes">Tarefas pendentes</option>
             <option value="finalizadas">Tarefas finalizadas</option>
@@ -51,7 +74,7 @@ const pegarTarefasPendentes = () => {
       </div>
     </form>
     <ul class="list-group mt-4">
-      <li v-for="tarefa in estado.tarefas" class="list-group-item">
+      <li v-for="tarefa in pegarTarefasFiltradas()" class="list-group-item">
         <input
           type="checkbox"
           :checked="tarefa.concluida"
