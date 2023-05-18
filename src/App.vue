@@ -17,13 +17,17 @@ const estado = reactive({
     },
   ],
 });
+
+const pegarTarefasPendentes = () => {
+  return estado.tarefas.filter(({ concluida }) => !concluida);
+};
 </script>
 
 <template>
   <div class="container">
     <header class="p-5 mb-4 mt-4 bg-light rounded-3">
       <h1>Minhas Tarefas</h1>
-      <p>Você possui 7 tarefas pendentes</p>
+      <p>Você possui {{ pegarTarefasPendentes().length }} tarefas pendentes</p>
     </header>
     <form>
       <div class="row">
