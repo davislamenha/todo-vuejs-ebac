@@ -1,4 +1,23 @@
-<script setup></script>
+<script setup>
+import { reactive } from 'vue';
+
+const estado = reactive({
+  tarefas: [
+    {
+      titulo: 'Estudar ES6',
+      concluida: false,
+    },
+    {
+      titulo: 'Estudar ReactJS',
+      concluida: true,
+    },
+    {
+      titulo: 'Trabalhar',
+      concluida: false,
+    },
+  ],
+});
+</script>
 
 <template>
   <div class="container">
@@ -28,12 +47,26 @@
       </div>
     </form>
     <ul class="list-group mt-4">
-      <li class="list-group-item">
-        <input type="checkbox" />
-        <label class="ms-3" for="">Estudar ES6</label>
+      <li v-for="tarefa in estado.tarefas" class="list-group-item">
+        <input
+          type="checkbox"
+          :checked="tarefa.concluida"
+          :id="tarefa.titulo"
+        />
+        <label
+          :for="tarefa.titulo"
+          :class="{ done: tarefa.concluida }"
+          class="ms-3"
+          for=""
+          >{{ tarefa.titulo }}</label
+        >
       </li>
     </ul>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.done {
+  text-decoration: line-through;
+}
+</style>
