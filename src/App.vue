@@ -50,6 +50,7 @@ const cadastrarTarefa = () => {
     concluida: false,
   };
   tarefas.push(novaTarefa);
+  estado.novoTitulo = '';
 };
 </script>
 
@@ -63,6 +64,7 @@ const cadastrarTarefa = () => {
       <div class="row">
         <div class="col">
           <input
+            :value="estado.novoTitulo"
             @change="({ target }) => (estado.novoTitulo = target.value)"
             type="text"
             placeholder="Digite a descrição da tarefa"
