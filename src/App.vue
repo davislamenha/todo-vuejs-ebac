@@ -27,6 +27,12 @@
         </div>
       </div>
     </form>
+    <ul class="list-group mt-4">
+      <li class="list-group-item">
+        <input type="checkbox" />
+        <label class="ms-3" for="">Estudar ES6</label>
+      </li>
+    </ul>
   </div>
 </template>
 
