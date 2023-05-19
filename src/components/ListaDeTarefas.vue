@@ -22,3 +22,9 @@ const props = defineProps(['tarefas', 'filtro']);
   </ul>
   <span class="d-block mt-4" v-else>Não há tarefas {{ props.filtro }}</span>
 </template>
+
+<style scoped>
+.done {
+  text-decoration: line-through;
+}
+</style>
