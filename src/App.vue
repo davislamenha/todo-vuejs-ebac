@@ -1,5 +1,8 @@
 <script setup>
 import { reactive } from 'vue';
+import Cabecalho from './components/Cabecalho.vue';
+import Formulario from './components/Formulario.vue';
+import ListaDeTarefas from './components/ListaDeTarefas.vue';
 
 const estado = reactive({
   filtro: 'todas',
@@ -56,54 +59,17 @@ const cadastrarTarefa = () => {
 
 <template>
   <div class="container">
-    <header class="p-5 mb-4 mt-4 bg-light rounded-3">
-      <h1>Minhas Tarefas</h1>
-      <p>Você possui {{ pegarTarefasPendentes().length }} tarefas pendentes</p>
-    </header>
-    <form @submit.prevent="cadastrarTarefa">
-      <div class="row">
-        <div class="col">
-          <input
-            :value="estado.novoTitulo"
-            @change="({ target }) => (estado.novoTitulo = target.value)"
-            type="text"
-            placeholder="Digite a descrição da tarefa"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="col-md-2">
-          <button type="submit" class="btn btn-primary">Cadastrar</button>
-        </div>
-        <div class="col-md-2">
-          <select
-            @change="({ target }) => (estado.filtro = target.value)"
-            class="form-control"
-          >
-            <option value="todas">Todas as tarefas</option>
-            <option value="pendentes">Tarefas pendentes</option>
-            <option value="finalizadas">Tarefas finalizadas</option>
-          </select>
-        </div>
-      </div>
-    </form>
-    <ul class="list-group mt-4">
-      <li v-for="tarefa in pegarTarefasFiltradas()" class="list-group-item">
-        <input
-          @change="({ target }) => (tarefa.concluida = target.checked)"
-          type="checkbox"
-          :checked="tarefa.concluida"
-          :id="tarefa.titulo"
-        />
-        <label
-          :for="tarefa.titulo"
-          :class="{ done: tarefa.concluida }"
-          class="ms-3"
-          for=""
-          >{{ tarefa.titulo }}</label
-        >
-      </li>
-    </ul>
+    <Cabecalho :tarefas-pendentes="pegarTarefasPendentes().length" />
+    <Formulario
+      :cadastrar-tarefa="cadastrarTarefa"
+      :novo-titulo="estado.novoTitulo"
+      :trocar-filtro="({ target }) => (estado.filtro = target.value)"
+      :editar-tarefa="({ target }) => (estado.novoTitulo = target.value)"
+    />
+    <ListaDeTarefas
+      :tarefas="pegarTarefasFiltradas()"
+      :filtro="estado.filtro"
+    />
   </div>
 </template>
 
